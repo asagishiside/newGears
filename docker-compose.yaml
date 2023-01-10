@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      #- "TZ=Asia/Tokyo"
+      - "MYSQL_ROOT_HOST=%"
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=root"
+    volumes:
+      - db:/var/lib/mysql
+      - ./etc/my.cnf:/etc/my.cnf
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./logs/mysql:/var/log/mysql
+    ports:
+      - "3306:3306"
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+volumes:
+  db:
