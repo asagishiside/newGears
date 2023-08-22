@@ -1,0 +1,17 @@
+= form_with model: @gear do |f|
+  div
+    = f.label :name, 'name'
+  div
+    = f.text_field :name
+  div
+    = f.label :brand_id, 'brand'
+  div
+    = f.number_field :brand_id
+  div
+    = f.label :gear_type, '種類'
+  div
+    = f.select :gear_type, Gear.gear_types.keys.map { |k| [k, k] }, prompt: "ギア種別を選択してください"
+  div
+    = render 'shared/validate_messages', model: @gear, name: :name
+  div
+    = f.submit "登録", class: ""

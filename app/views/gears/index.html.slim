@@ -3,4 +3,9 @@ h1
 p
   | Find me in app/views/gears/index.html.erb
 p
-  = @gears.name
+  = @gear.brand
+p
+  - @gears.each do |gear|
+    p
+      = gear.name
+      = gear.brand.name

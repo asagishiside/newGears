@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'posts/:id/new', to: 'posts#new', as: 'posts_new'
+  post 'posts' => "posts#create"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'gears/index'

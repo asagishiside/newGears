@@ -1,3 +1,3 @@
 class Brand < ApplicationRecord
-    has_many:news
+    has_many:gear
 end

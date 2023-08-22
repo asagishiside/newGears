@@ -1,0 +1,44 @@
+section.text-gray-600.body-font.relative
+  .container.px-5.py-24.mx-auto.flex.sm:flex-nowrap.flex-wrap
+    .bg-gray-300.w-full.rounded-lg.overflow-hidden.sm:mr-10.p-10.flex-col.items-center.justify-start.relative class=("md:w-1/2")
+    /   - if @gear.images.present?
+        = image_tag @gear.images[0].variant(resize: "600x600").processed, :alt => "#{@gear.name}", :class => "rounded w-full object-cover object-center mb-6"
+      .bg-white.relative.flex.flex-wrap.py-6.rounded.shadow-md
+        .px-6 class="lg:w-1/2"
+          h2.title-font.font-semibold.text-gray-900.tracking-widest.text-xs
+            = @gear.brand.name
+          p.mt-1
+            = @gear.name
+    .bg-white.flex.flex-col.md:ml-auto.w-full.md:py-8.mt-8.md:mt-0 class=("md:w-1/2")
+      h2.text-gray-900.text-lg.mb-8.font-bold.font-ja レビューを投稿する
+      / p.leading-relaxed.mb-5.text-gray-600 Post-ironic portland shabby chic echo park, banjo fashion axe
+      = form_with model: @post do |f|
+        / = render 'shared/error_messages', model: f.object
+        .relative.mb-4
+          = f.label :point, 'スコア', {class: 'leading-7 text-gray-600 font-ja font-bold'}
+          div
+            span.mr-1
+              svg.inline.w-6.h-6.text-blue-500 fill="orange" stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox=("0 0 24 24")
+                path d=("M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z")
+            span.text-xs.leading-7.text-gray-600.mr-5.font-medium MAX5点中
+            = f.number_field :point, max: 5, min: 1, class: 'bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out font-bold'
+            span.leading-7.text-gray-600.ml-1.font-bold 点
+        .relative.mb-4
+            = f.label :review, 'コメント', {class: 'leading-7 text-gray-600 font-ja font-bold'}
+            = f.text_area :review, class: 'w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out'
+            / = render 'shared/validate_messages', model: @post, name: :review
+        = f.hidden_field :gear_id, value: @gear.id, id: 'gearId'
+        = f.submit "投稿", class: "font-ja text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none rounded text-lg cursor-pointer button__activebase"
+
+javascript:
+  const addToNewUrl = () => {
+    let path = location.pathname;
+    let pattern = /^.*\/new.*$/
+    const gearId = document.getElementById("gearId").value
+    // URLが正しければ変更は不要
+    if(path.match(pattern)) return;
+
+    // URLを変更
+    history.replaceState('', '', `${ path }/${gearId}/new`)
+  }
+  window.onload = addToNewUrl();

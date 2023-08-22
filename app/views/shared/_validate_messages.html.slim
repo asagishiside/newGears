@@ -1,0 +1,4 @@
+- if model.errors.include?(name)
+    - model.errors.full_messages_for(name).each do |message|
+        p.font-ja.text-sm(style="color:red;")
+            = message
