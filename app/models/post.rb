@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
   belongs_to :gear
 
-  validates :review, :point, presence: true
+  validates :review, :score, presence: true
 end
