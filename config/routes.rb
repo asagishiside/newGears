@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   post 'posts' => "posts#create"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  get 'gears/index'
-  get 'gears/show/:id', to: 'gears#show', as: 'gears_show'
+  get '/', to: 'gears#index', as: 'gears'
+  get 'gears/:id', to: 'gears#show', as: 'gears_show'
   get 'gears/new', as: 'gears_new'
   post 'gears', to: 'gears#create'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
