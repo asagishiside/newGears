@@ -1,4 +1,4 @@
-= form_with model: @gear do |f|
+= form_with model: @gear, url: gears_create_path do |f|
   div
     = f.label :name, 'name'
   div
@@ -11,6 +11,8 @@
     = f.label :gear_type, '種類'
   div
     = f.select :gear_type, Gear.gear_types.keys.map { |k| [k, k] }, prompt: "ギア種別を選択してください"
+  div
+    = f.file_field :image
   div
     = render 'shared/validate_messages', model: @gear, name: :name
   div
