@@ -12,7 +12,7 @@
   div
     = f.select :gear_type, Gear.gear_types.keys.map { |k| [k, k] }, prompt: "ギア種別を選択してください"
   div
-    = f.file_field :image
+    = f.file_field :images, multiple: true
   div
     = render 'shared/validate_messages', model: @gear, name: :name
   div

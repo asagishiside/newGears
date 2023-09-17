@@ -5,6 +5,7 @@ WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
+RUN apt-get update && apt-get install -y libvips
 RUN gem update --system
 RUN bundle update --bundler
 

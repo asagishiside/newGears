@@ -24,7 +24,7 @@ class GearsController < ApplicationController
   private
 
     def gear_params
-      params.require(:gear).permit(:name, :gear_type, :brand_id, :image)
+      params.require(:gear).permit(:name, :gear_type, :brand_id, images: [])
     end
 
 end
