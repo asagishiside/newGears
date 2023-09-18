@@ -74,3 +74,4 @@ logs/
 
 /node_modules
 .DS_Store
+/logs/mysql/mysql-slow.log

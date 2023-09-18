@@ -1,6 +1,53 @@
-h1
-  | Gears#show
-p
-  | Find me in app/views/gears/show.html.erb
-p =@gears.name
-= image_tag url_for(@gears.image)
+section.text-gray-600.body-font.overflow-hidden
+  .container.px-5.py-2.mx-auto
+    .mx-auto.flex.flex-wrap class="lg:w-4/5"
+      - if @gear.images.present?
+        = image_tag @gear.images[0].variant(resize_to_fill: [300, nil]).processed, :alt => "#{@gear.name}", :class => "w-full max-h-72 lg:h-auto mh-500 object-contain object-center rounded lg:w-1/2"
+      - else
+        = image_tag "logo.svg", size: "200x200", :class => "w-full lg:h-auto max-h-72 object-contain object-center rounded lg:w-1/2"
+      .w-full.lg:pl-10.lg:py-6.mt-6.lg:mt-0 class="lg:w-1/2"
+        h2.text-sm.title-font.text-gray-500.tracking-widest
+          = @gear.brand.name
+        h1.text-gray-900.text-3xl.title-font.font-medium.mb-1
+          = @gear.name
+        .flex.mb-4.items-center
+          .ratingstar__base.font-semibold.title-font.text-gray-700.inline-flex.text-lg
+            - if @gear.posts.present?
+              span.ratingstar(style="width: #{@gear.posts.average(:score)*20}%")
+          span.rate.text-gray-600.ml-2
+            - if @gear.posts.present?
+              = @gear.posts.average(:score).ceil(1)
+            - else
+              | レビュー0件
+          span.flex.ml-3.pl-3.py-2.border-l-2.border-gray-200.space-x-2s
+            = link_to "https://twitter.com/intent/tweet?text=#{@gear.name}の口コミ%0a&url=#{request.url}%0a&hashtags=#{@gear.brand.name}%0a,#{@gear.name}", class: "text-gray-500 mr-2", target: :_blank, rel: "noopener noreferrer" do
+              = image_tag "logo.svg", size: "30x30"
+            .line-it-button data-color="default" data-count="true" data-lang="ja" data-size="small" data-type="share-b" data-url="#{request.url}" data-ver="3" style=("display: none;")
+        p.text-sm.leading-relaxed.border-b-2.border-gray-100.pb-5.mb-5
+          = @gear.text
+        .flex.mt-6.items-center.pb-5.mb-5
+          = link_to "レビューを書く", posts_new_path(@gear.id), {class: "flex mr-auto text-white bg-yellow-500 border-0 py-2 px-6 rounded button__activebase"}
+
+section.text-gray-600.body-font.overflow-hidden
+  .container.px-5.py-2.mx-auto.max-w-screen-md
+    .-my-8
+      - if @gear.posts.present?
+        - @gear.posts.each do |post|
+          .py-8.flex.flex-wrap.flex-col.md:flex-nowrap.border-b
+            .w-full.pl-3.flex-shrink-0.flex.flex-col.mb-1
+              span.mt-1.text-gray-500.text-sm
+                = post.updated_at.to_s(:datetime_jp)
+            .md:flex-grow.bg-gray-100.p-3.rounded
+              .flex.items-end
+                .ratingstar__base.font-semibold.title-font.text-gray-700.inline-flex.text-lg
+                  span.ratingstar(style="width: #{post.score*20}%")
+                span.text-gray-600.ml-2.font-bold.text-3xl
+                  = post.score
+              p.leading-relaxed.text-sm.font-bold
+                = post.review
+      - else
+        p.leading-relaxed.text-sm
+          | まだレビューがありません。
+        .flex.mt-6.items-center.pb-5.mb-5
+          = link_to "レビューに協力する", posts_new_path(@gear.id), {class: "flex mr-auto text-white bg-yellow-500 border-0 py-2 px-6 rounded button__activebase"}
+

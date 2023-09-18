@@ -1,3 +1,46 @@
 .field_with_errors {
     display: contents;
   }
+  a:link{
+    transition: opacity .5s ease-out;
+    text-decoration: none;
+}
+a:hover{
+    opacity: 0.6;
+}
+.button__activebase{
+    transition: opacity .5s ease-out;
+    cursor: pointer;
+}
+.button__activebase:hover{
+    opacity: 0.6;
+}
+
+.font-ja{
+    font-family: "Hiragino Kaku Gothic ProN", メイリオ, meiryo, Arial, Helvetica, sans-serif;
+}
+
+.ratingstar__base{
+    background-image: image-url("star-base.svg");
+    background-size: 20px 20px;
+    background-position: center left;
+    background-repeat: repeat-x;
+    width: 100px;
+    height: 30px;
+    position: relative;
+  }
+.ratingstar{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 30px;
+    background-image: image-url("stars.svg");
+    background-size: 20px 20px;
+    background-position: center left;
+    background-repeat: repeat-x;
+}
+
+.mh-500{
+    max-height: 500px;
+}
