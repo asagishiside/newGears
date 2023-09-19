@@ -1,15 +1,6 @@
 class GearsController < ApplicationController
   def index
-    @gears = Gear.order(updated_at: :desc).limit(10)
-
-    if params[:gear_type].present?
-      @gears = @gears.where(gear_type: params[:gear_type])
-    end
-
-    if params[:name].present?
-      escaped_name = ActiveRecord::Base.sanitize_sql_like(params[:name])
-      @gears = Gear.where("name LIKE ?", "%#{escaped_name}%")
-    end
+    @gears = Gear.search(params[:name])
   end
 
   def show
