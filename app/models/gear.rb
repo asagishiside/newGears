@@ -5,6 +5,9 @@ class Gear < ApplicationRecord
 
   enum gear_type: { board: 0, binding: 1, boots: 2}
 
+  validates :brand, presence: true
+  validates :name, presence: true
+
   def self.search(query)
     return recent_gears if query.blank?
     logger.debug "query: #{query}"
@@ -36,7 +39,7 @@ class Gear < ApplicationRecord
     conditions = self.none
 
     combinations.each do |combo|
-      condition = joins(:brand).where('gears.name LIKE ? AND brands.name LIKE ?', "%#{combo[0]}%", "%#{combo[1]}%")
+      condition = joins(:brand).where('gears.name LIKE ? OR brands.name LIKE ?', "%#{combo[0]}%", "%#{combo[1]}%")
       conditions = conditions.or(condition)
     end
 
